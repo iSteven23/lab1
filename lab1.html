@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Lab1</title>
+		<meta charset = “utf-8”>
+		<style type="text/css">
+			#box{
+				background-color: red;
+				border-style: solid;
+				border-color: black;
+				width: 300px;
+				height: 250px;
+				text-align: center;
+			}
+		</style>
+		<script type="text/javascript">
+
+			var userText;
+			var passText;
+			var IDnum;
+			var messText;
+			var hasNum = /\d/;
+			var passCheck = /^[A-Za-z]\w{2,14}$/;
+
+			function subButtonHandler()
+			{
+				userText = document.getElementById("usernameText").value;
+				passText = document.getElementById("passwordText").value;
+				IDnum = document.getElementById("studentID").value;
+				messText = document.getElementById("messsage").value;
+
+				console.clear();
+
+				if (hasNum.test(userText)) {
+					console.log("BAD: contains numbers");
+				}
+				else
+				{
+					console.log("good username");
+				}
+
+				if (passText.match(passCheck)) {
+					console.log("good password");
+				}
+				else{
+					console.log("bad password");
+				}
+
+				if(IDnum.length == 9){
+					console.log("good ID");
+				}
+				else
+				{
+					console.log("bad ID");
+				}
+				
+				
+			}
+			
+
+			function init()
+			{
+				var theSubButton = document.getElementById("theSubButton");
+				theSubButton.addEventListener("click", subButtonHandler);
+							}
+			window.addEventListener("load",init);
+
+		</script>
+		
+
+	</head>
+	<body>
+		<form>
+			<div id="box">
+				Username: <br><input type="text" id="usernameText"><br>
+				Password: <br><input type="password" id="passwordText"><br>
+				Student ID: <br><input type="number" id="studentID"><br>
+				Message: <br><textarea id="message" style="height: 75px;"></textarea><br>
+				<input type="button" id="theSubButton" value="Submit">
+			</div>
+
+		</form>
+		
+	</body>
+</html>
+
+<!--
+username: textfield (only letters)
+password: upper/lower, numbers
+student ID: numbers
+messsage: up to 25 words
+submit: type "button"
+	-->
