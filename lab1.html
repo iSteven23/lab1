@@ -4,14 +4,15 @@
 		<title>Lab1</title>
 		<meta charset = “utf-8”>
 		<style type="text/css">
-			#box{
-				background-color: red;
+			#boxAtt{
+				background-color: aqua;
 				border-style: solid;
 				border-color: black;
-				width: 300px;
-				height: 250px;
+				width: 350px;
+				height: 300px;
 				text-align: center;
 			}
+
 		</style>
 		<script type="text/javascript">
 
@@ -21,18 +22,27 @@
 			var messText;
 			var hasNum = /\d/;
 			var passCheck = /^[A-Za-z]\w{2,14}$/;
+			var wordCount = 25;
+			var numWordSpan;
+			var theTextArea;
+			var theTextField;
+			var output;
+			var boxColor;
 
 			function subButtonHandler()
 			{
 				userText = document.getElementById("usernameText").value;
 				passText = document.getElementById("passwordText").value;
 				IDnum = document.getElementById("studentID").value;
-				messText = document.getElementById("messsage").value;
+				output.innerHTML = "";
+				
 
 				console.clear();
 
 				if (hasNum.test(userText)) {
 					console.log("BAD: contains numbers");
+					output.innerHTML += "INVALID USERNAME<br>";
+
 				}
 				else
 				{
@@ -44,6 +54,7 @@
 				}
 				else{
 					console.log("bad password");
+					output.innerHTML += "INVALID PASSWORD<br>";
 				}
 
 				if(IDnum.length == 9){
@@ -52,17 +63,74 @@
 				else
 				{
 					console.log("bad ID");
+					output.innerHTML += "INVALID ID NUMBER<br>";
+				}
+				if(output.innerHTML == "")
+				{
+					output.innerHTML += "SUCCESS!";
+					document.body.style.backgroundColor = "white";
+				}
+				else
+				{
+					document.body.style.backgroundColor = "blue";
 				}
 				
 				
+			}
+			function wordCounter()
+			{
+				var currString = theTextArea.value;
+
+				if (currString === "") 
+				{
+			  		numWordSpan.innerHTML = 0;
+				}
+				else
+				{
+			  		// var strArray = currString.split(" "); /// method shown on slides
+			  		var strArray = currString.split(/ +/);   /// regular expression method
+			  		
+			  		if(strArray.length < 25)
+			  		{
+			  			numWordSpan.innerHTML = wordCount - strArray.length;
+			  		}
+			  		else
+			  		{
+			  			theTextField.disabled = true;
+			  			numWordSpan.innerHTML = wordCount - strArray.length;
+			  		}
+			  		
+
+				}
 			}
 			
 
 			function init()
 			{
+
+
 				var theSubButton = document.getElementById("theSubButton");
 				theSubButton.addEventListener("click", subButtonHandler);
-							}
+
+				theTextArea = document.getElementById("messageText");
+				numWordSpan = document.getElementById("numberOfWords");
+				numberOfWords.innerHTML = wordCount;
+
+				theTextArea.addEventListener("keyup", wordCounter);
+				theTextField = document.getElementById("messageText")
+
+				output = document.getElementById("theOuput");
+				boxColor = document.getElementById("boxAtt");
+
+				document.addEventListener("keydown", function(event)
+				{
+			  		if (event.which == 8) 
+			  		{
+			  			theTextField.disabled = false;
+			  		}
+			  	})
+
+			}
 			window.addEventListener("load",init);
 
 		</script>
@@ -71,13 +139,16 @@
 	</head>
 	<body>
 		<form>
-			<div id="box">
+			<div id="boxAtt">
+				<h3>Registration Form</h3>
 				Username: <br><input type="text" id="usernameText"><br>
 				Password: <br><input type="password" id="passwordText"><br>
 				Student ID: <br><input type="number" id="studentID"><br>
-				Message: <br><textarea id="message" style="height: 75px;"></textarea><br>
+				Message: <span id="numberOfWords"></span> words remaining<br><textarea id="messageText" style="height: 75px;"></textarea><br>
 				<input type="button" id="theSubButton" value="Submit">
+				
 			</div>
+			<br><div id="theOuput" style="color: red; size: 14px;"></div>
 
 		</form>
 		
