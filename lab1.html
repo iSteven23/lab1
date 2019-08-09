@@ -21,7 +21,7 @@
 			var IDnum;
 			var messText;
 			var hasNum = /\d/;
-			var passCheck = /^[A-Za-z]\w{2,14}$/;
+			var pCheck = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{3,}$/;
 			var wordCount = 25;
 			var numWordSpan;
 			var theTextArea;
@@ -39,8 +39,8 @@
 
 				console.clear();
 
-				if (hasNum.test(userText)) {
-					console.log("BAD: contains numbers");
+				if (hasNum.test(userText) || userText == "") {
+					console.log("BAD: contains numbers or empty");
 					output.innerHTML += "INVALID USERNAME<br>";
 
 				}
@@ -49,7 +49,7 @@
 					console.log("good username");
 				}
 
-				if (passText.match(passCheck)) {
+				if (passText.match(pCheck)){
 					console.log("good password");
 				}
 				else{
@@ -68,7 +68,7 @@
 				if(output.innerHTML == "")
 				{
 					output.innerHTML += "SUCCESS!";
-					document.body.style.backgroundColor = "white";
+					document.body.style.backgroundColor = "yellow";
 				}
 				else
 				{
@@ -87,8 +87,8 @@
 				}
 				else
 				{
-			  		// var strArray = currString.split(" "); /// method shown on slides
-			  		var strArray = currString.split(/ +/);   /// regular expression method
+			  		
+			  		var strArray = currString.split(/ +/);
 			  		
 			  		if(strArray.length < 25)
 			  		{
@@ -121,6 +121,7 @@
 
 				output = document.getElementById("theOuput");
 				boxColor = document.getElementById("boxAtt");
+				document.body.style.backgroundColor = "yellow";
 
 				document.addEventListener("keydown", function(event)
 				{
@@ -157,7 +158,7 @@
 
 <!--
 username: textfield (only letters)
-password: upper/lower, numbers
+password: at least one: upper, lower, and number
 student ID: numbers
 messsage: up to 25 words
 submit: type "button"
